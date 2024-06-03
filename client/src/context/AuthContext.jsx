@@ -9,7 +9,7 @@ const AuthProvider = ({ children }) => {
     })
 
     useEffect(() => {
-        const data = JSON.parse(localStorage.getItem('token'))
+        const data = JSON.parse(localStorage.getItem('auth'))
         if (data) {
             setAuth({
                 user: data.user,

@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext'
 
 const AdminRoute = () => {
     const [auth,setAuth] = useAuth()
+    console.log(auth);
    return (
     auth?.token && auth?.user?.role==="admin" ? <Outlet/> : <Navigate to={'/'} />
   )

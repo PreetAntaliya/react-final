@@ -9,6 +9,16 @@ import { useAuth } from '../context/AuthContext';
 const Header = () => {
   const [auth, setAuth] = useAuth();
   const navigate = useNavigate()
+  const handleLogout = () => {
+    setAuth({
+        ...auth,
+        user: null,
+        token: null
+    })    
+    localStorage.removeItem('auth')
+    navigate('/login');
+
+}
   return (
     <div>
       <div>
@@ -46,6 +56,13 @@ const Header = () => {
               />
               <button className="btn btn-secondary" type="submit">Search</button>
             </form>
+            {
+              !auth.token ? (
+                <></>
+              ): (
+                <Nav.Link onClick={() => handleLogout()}>Logout</Nav.Link>
+              )
+            }
           </Navbar.Collapse>
         </Container>
       </Navbar>

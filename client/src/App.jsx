@@ -9,6 +9,7 @@ import Register from './pages/Register';
 import 'react-toastify/dist/ReactToastify.css';
 import Login from './pages/Login';
 import AdminRoute from './Private/AdminRoute';
+import Category from './pages/admin/Category';
 
 function App() {
 
@@ -21,8 +22,7 @@ function App() {
 
         {/* admin route */}
         <Route element={<AdminRoute />}>
-          {/* <Route path='/dashboard' element={<Dashboard />} /> */}
-          {/* <Route path='/category' element={<Category />} /> */}
+          <Route path='/category' element={<Category />} />
         </Route>
       </Routes>
     </BrowserRouter>

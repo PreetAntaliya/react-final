@@ -7,7 +7,7 @@ import axios from 'axios'
 import { toast } from 'react-toastify'
 import { useAuth } from '../context/AuthContext'
 
-const Login = ({onLogin}) => {
+const Login = () => {
 
     const navigate = useNavigate()
     const [auth,setAuth] = useAuth();
@@ -21,15 +21,21 @@ const Login = ({onLogin}) => {
                 email,
                 password,
             });
+            console.log();
             navigate('/')
             toast.success(response.data.message);
+            const { token, user } = response.data;
             setAuth({
                 ...auth,
                 token : token,
-                user : user
+                user: user,
             })
             localStorage.setItem('auth', JSON.stringify({ token, user }));
-            // const token = response.data.token
+            if(res.user?.role === "admin"){
+                navigate('/dashboard')
+            }else{
+                navigate('/home')
+            }
         } catch (error) {
             if (error.response && error.response.data && error.response.data.error) {
                 toast.error(error.response.data.error);
