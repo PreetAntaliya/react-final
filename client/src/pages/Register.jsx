@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Header from '../components/Header';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
@@ -14,18 +13,15 @@ const Register = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Form Submitted');
-        console.log('Form Values:', { name, email, password, cpassword });
 
         try {
-
             const response = await axios.post('http://localhost:8000/v1/userAdd', {
                 name,
                 email,
                 password,
                 cpassword,
             });
-            navigate('/')
+            navigate('/login')
 
             toast.success(response.data.message);
         } catch (error) {

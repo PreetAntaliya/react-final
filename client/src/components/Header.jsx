@@ -1,11 +1,14 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import images from '../assets/imgs/Images';
+import { useAuth } from '../context/AuthContext';
 
 const Header = () => {
+  const [auth, setAuth] = useAuth();
+  const navigate = useNavigate()
   return (
     <div>
       <div>
@@ -22,17 +25,17 @@ const Header = () => {
       </div>
       <Navbar className='header_nav' expand="lg">
         <Container>
-          <Navbar.Brand href="#home">
+          <Navbar.Brand as={Link} to={'/'}>
             <img src={images.logo} alt="logo" width={250} />
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="mx-auto">
-              <Nav.Link as={Link}>Home</Nav.Link>
-              <Nav.Link as={Link}>Products</Nav.Link>
-              <Nav.Link as={Link}>Blog</Nav.Link>
-              <Nav.Link as={Link}>Cart</Nav.Link>
-              <Nav.Link as={Link}>Contact</Nav.Link>
+              <Nav.Link as={Link} to={'/'}>Home</Nav.Link>
+              <Nav.Link as={Link} to={'/'}>Products</Nav.Link>
+              <Nav.Link as={Link} to={'/'}>Blog</Nav.Link>
+              <Nav.Link as={Link} to={'/'}>Cart</Nav.Link>
+              <Nav.Link as={Link} to={'/'}>Contact</Nav.Link>
             </Nav>
             <form className="d-flex">
               <input
