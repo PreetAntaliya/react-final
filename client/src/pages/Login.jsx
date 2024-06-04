@@ -31,10 +31,10 @@ const Login = () => {
                 user: user,
             })
             localStorage.setItem('auth', JSON.stringify({ token, user }));
-            if(res.user?.role === "admin"){
-                navigate('/dashboard')
+            if(user?.role === "admin"){
+                navigate('/category')
             }else{
-                navigate('/home')
+                navigate('/')
             }
         } catch (error) {
             if (error.response && error.response.data && error.response.data.error) {
