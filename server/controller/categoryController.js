@@ -20,6 +20,24 @@ const categoryAdd = async (req, res) => {
   }
 };
 
+const categoryView = async (req, res) => {
+  try {
+    
+    const allCategory = await Category.find({})
+    return res.status(201).json({
+      success: true,
+      message: "Category finded successfully",
+      allCategory,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error" + err,
+    });
+  }
+};
+
 module.exports = {
   categoryAdd,
+  categoryView
 };

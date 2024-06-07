@@ -1,10 +1,16 @@
 :root {
-  --primary : #0da487;
-  --white : #ffffff;
-  --black : #000000;
-  --primary : #0da487;
-  --font_16: min(max(13px, calc(0.8125rem + (18 - 13) * ((100vw - 575px) / (1920 - 575)))), 18px);
-  --font_24: min(max(14px, calc(0.875rem + (24 - 14) * ((100vw - 575px) / (1920 - 575)))), 24px);
+  --primary: #0da487;
+  --white: #ffffff;
+  --black: #000000;
+  --primary: #0da487;
+  --font_16: min(
+    max(13px, calc(0.8125rem + (18 - 13) * ((100vw - 575px) / (1920 - 575)))),
+    18px
+  );
+  --font_24: min(
+    max(14px, calc(0.875rem + (24 - 14) * ((100vw - 575px) / (1920 - 575)))),
+    24px
+  );
 }
 body {
   font-family: "Public Sans";
@@ -42,7 +48,17 @@ ul {
   background-color: var(--primary);
 }
 
-.header_nav a{
+.header_nav a {
   color: var(--white) !important;
   font-size: var(--font_16) !important;
+}
+
+.list-group {
+  border-radius: 0 !important;
+}
+
+.custom_btn,
+.list-group-item.active {
+  background-color: var(--primary) !important;
+  border-color: var(--primary) !important;
 }

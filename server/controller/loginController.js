@@ -59,7 +59,7 @@ const login = async (req, res) => {
       return res.status(401).json({ error: "Password is incorrect" });
     }
 
-    const token = jwt.sign({ payload: user }, "abcd", { expiresIn: "1m" });
+    const token = jwt.sign({ payload: user }, "abcd", { expiresIn: "22h" });
     // res.setHeader('Authorization', 'Bearer ' + token);
     return res.status(200).json({
       success: true,
@@ -75,7 +75,25 @@ const login = async (req, res) => {
   }
 };
 
+const validateUser = async (req, res) => {
+  try {
+    return res.status(200).json({
+      success: true,
+      message: "Admin Authorised...!",
+      data : req.user 
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      message: "Admin Auth Error" + error,
+    });
+  }
+};
+
+
+
 module.exports = {
   userAdd,
   login,
+  validateUser
 };

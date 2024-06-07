@@ -17,8 +17,8 @@ const verifyToken = async(req,res,next) => {
                 }) 
             }
             req.user = user;
+            return next();
         });
-        return next();
        
     }catch(err){
         return res.status(501).send({
@@ -28,18 +28,20 @@ const verifyToken = async(req,res,next) => {
     }
 }
 
-module.exports = {
-    verifyToken,
+const isAdmin = async (req,res,next)=>{
+    try{
+        res.send(req.user.payload);
+        return next();
+    }catch(err){
+        return res.status(501).send({
+            success : false,
+            messege : "isAdmin check Error" + err
+        })
+    }
 }
 
-// const roleBaseAuth = (role)=>{
-//     return (req,res,next) => { 
-//         if(!role.includes(req.user.payload.role)){
-//             return res.status(200).send({ 
-//                 success : false,
-//                 message : "Only admin access " + req.user.email
-//             }) 
-//         }
-//         return  next();
-//     }
-// }
+module.exports = {
+    verifyToken,
+    isAdmin
+}
+

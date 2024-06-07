@@ -1,47 +1,45 @@
 import React, { useState } from 'react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
-import { ToastContainer } from 'react-bootstrap'
+import { ToastContainer, toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
-import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import { useAuth } from '../context/AuthContext'
 
 const Login = () => {
-
     const navigate = useNavigate()
-    const [auth,setAuth] = useAuth();
+    const [auth, setAuth] = useAuth()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            const response = await axios.post('http://localhost:8000/v1/login', {
-                email,
-                password,
-            });
-            console.log();
-            navigate('/')
-            toast.success(response.data.message);
-            const { token, user } = response.data;
-            setAuth({
-                ...auth,
-                token : token,
-                user: user,
+            const response = await fetch('http://localhost:8000/v1/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, password }),
             })
-            localStorage.setItem('auth', JSON.stringify({ token, user }));
-            if(user?.role === "admin"){
+            
+            const data = await response.json()
+            if (!response.ok) {
+                throw new Error(data.error || 'Login failed')
+            }
+
+            toast.success(data.message)
+            const { token, user } = data
+            localStorage.setItem('auth', JSON.stringify({ token, user }))
+            setAuth({ token, user })
+
+            if (user?.role === 'admin') {
                 navigate('/category')
-            }else{
+            } else {
                 navigate('/')
             }
         } catch (error) {
-            if (error.response && error.response.data && error.response.data.error) {
-                toast.error(error.response.data.error);
-            } else {
-                toast.error(error.message);
-            }
+            toast.error(error.message || 'Something went wrong')
         }
     }
 
@@ -78,20 +76,16 @@ const Login = () => {
                                                     </div>
                                                     <a href="Forgot-Password.html">Forgot Password?</a>
                                                 </div>
-                                                <a href="#">
-                                                    <button type="submit" className="login-btn">Login</button>
-                                                </a>
+                                                <button type="submit" className="login-btn">Login</button>
                                             </form>
                                             <h6><span>OR</span></h6>
-                                            <div className="options ">
-                                                <a href="#"><button className="login-facebook"><i className="ri-facebook-fill fb" />Login
-                                                    with Facebook</button></a>
-                                                <a href="#"><button className="login-google"><i className="ri-google-fill gl" />Login with
-                                                    Google</button></a>
+                                            <div className="options">
+                                                <a href="#"><button className="login-facebook"><i className="ri-facebook-fill fb" />Login with Facebook</button></a>
+                                                <a href="#"><button className="login-google"><i className="ri-google-fill gl" />Login with Google</button></a>
                                             </div>
                                             <h6 />
                                             <div className="sign-up text-center">
-                                                <p>Don't have an account?</p> <a href="register.html">Sign up</a>
+                                                <p>Don't have an account?</p> <a href="#">Sign up</a>
                                             </div>
                                         </div>
                                     </div>
