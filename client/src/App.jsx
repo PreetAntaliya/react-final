@@ -9,7 +9,7 @@ import Register from './pages/Register';
 import 'react-toastify/dist/ReactToastify.css';
 import Login from './pages/Login';
 import Category from './pages/admin/Category';
-import AddCategory from './pages/admin/AddCategory';
+import Product from './pages/admin/Product';
 
 function App() {
   const [role, setRole] = useState("");
@@ -57,10 +57,10 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Index />} />
-        <Route path="/add-category" element={<AddCategory />} />
 
         {/* admin route */}
         <Route path="/category" element={role === 'admin' ? <Category /> : <Navigate to="/" />} />
+        <Route path="/product" element={role === 'admin' ? <Product /> : <Navigate to="/" />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </BrowserRouter>

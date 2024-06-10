@@ -6,8 +6,9 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { useDispatch } from 'react-redux';
 import { ADD_CATEGORY, DELETE_CATEGORY, VIEW_CATEGORY, UPDATE_CATEGORY } from '../../redux/action/categoryAction';
+import { VIEW_PRODUCT } from '../../redux/action/productAction';
 
-function CategoryModal({ show, onHide, editMode, categoryName: initialCategoryName, categoryId }) {
+function ProductModal({ show, onHide, editMode, categoryName: initialCategoryName, categoryId }) {
   const [categoryName, setCategoryName] = useState(initialCategoryName || '');
   const dispatch = useDispatch();
 
@@ -65,20 +66,21 @@ function CategoryModal({ show, onHide, editMode, categoryName: initialCategoryNa
   );
 }
 
-const Category = () => {
+const Product = () => {
   const [modalShow, setModalShow] = useState(false);
-  const [categories, setCategories] = useState([]);
+  const [products, setProducts] = useState([]);
   const [editMode, setEditMode] = useState(false);
   const [currentCategory, setCurrentCategory] = useState({});
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const fetchCategories = async () => {
-      const categoryData = await dispatch(VIEW_CATEGORY());
-      setCategories(categoryData);
+    const fetchProduct = async () => {
+      const productData = await dispatch(VIEW_PRODUCT());
+      console.log(productData);
+      setProducts(productData);
     };
 
-    fetchCategories();
+    fetchProduct();
   }, [dispatch]);
 
   const handleEdit = (category) => {
@@ -99,7 +101,7 @@ const Category = () => {
           <div className='w-75'>
             <div>
               <Button className='custom_btn' onClick={() => { setEditMode(false); setModalShow(true); }}>Add Category</Button>
-              <CategoryModal
+              <ProductModal
                 show={modalShow}
                 onHide={() => setModalShow(false)}
                 editMode={editMode}
@@ -108,21 +110,31 @@ const Category = () => {
               />
             </div>
             <div className='w-100'>
-              <h2>Categories</h2>
+              <h2>products</h2>
               <ul className='w-100'>
                 <Table striped bordered>
                   <thead>
                     <tr>
                       <th>#</th>
+                      <th>Image</th>
+                      <th>product</th>
                       <th>Category</th>
+                      <th>Offer Price</th>
+                      <th>Price</th>
                       <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {categories.map((category, i) => (
-                      <tr key={category._id}>
+                    {products.map((product, i) => (
+                      <tr key={product._id}>
                         <td>{i + 1}</td>
-                        <td>{category.categoryName}</td>
+                        <td>
+                            <img src={product.productImage} alt={product.productName} width={100} />
+                        </td>
+                        <td>{product.productName}</td>
+                        <td>{product.categoryId.categoryName}</td>
+                        <td>{product.productOfferPrice}</td>
+                        <td>{product.productPrice}</td>
                         <td>
                           <Button variant='danger' onClick={() => dispatch(DELETE_CATEGORY(category._id))}>Delete</Button>
                           <Button className='ms-3' variant='primary' onClick={() => handleEdit(category)}>Edit</Button>
@@ -140,4 +152,4 @@ const Category = () => {
   );
 }
 
-export default Category;
+export default Product;

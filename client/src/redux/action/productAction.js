@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 const auth = JSON.parse(localStorage.getItem("auth"));
 const token = auth?.token;
 
-export const ADD_CATEGORY = (categoryName) => {
+export const ADD_PRODUCT = (categoryName) => {
   return async (dispatch) => {
     try {
 
@@ -31,12 +31,12 @@ export const ADD_CATEGORY = (categoryName) => {
   };
 };
 
-export const VIEW_CATEGORY = () => {
+export const VIEW_PRODUCT = () => {
   return async (dispatch) => {
     try {
 
       const response = await fetch(
-        "http://localhost:8000/v1/category/categoryView",
+        "http://localhost:8000/v1/product/productView",
         {
           method: "GET",
           headers: {
@@ -46,7 +46,8 @@ export const VIEW_CATEGORY = () => {
         }
       );
       const data = await response.json();
-      let record = data.allCategory
+      let record = data.allProduct
+      console.log(record);
       if (response.ok) {
         return record;
       } else {
@@ -59,7 +60,7 @@ export const VIEW_CATEGORY = () => {
     }
   };
 };
-export const DELETE_CATEGORY = (id) => {
+export const DELETE_PRODUCT = (id) => {
   return async (dispatch) => {
     try {
       console.log(id);
@@ -92,7 +93,7 @@ export const DELETE_CATEGORY = (id) => {
   };
 };
 
-export const UPDATE_CATEGORY = (id, updatedCategory) => {
+export const UPDATE_PRODUCT = (id, updatedCategory) => {
   return async (dispatch) => {
     try {
       const response = await fetch(`http://localhost:8000/v1/category/categoryUpdate?id=${id}`, {

@@ -8,7 +8,7 @@ const Sidebar = () => {
     <ListGroup as="ul">
       <ListGroup.Item as={Link}  >Dashboard</ListGroup.Item>
       <ListGroup.Item as={Link} to={`/category`} active={location.pathname === "/category"}>Category</ListGroup.Item>
-      <ListGroup.Item as={Link} >Porta ac consectetur ac</ListGroup.Item>
+      <ListGroup.Item as={Link} to={`/product`} active={location.pathname === "/product"}>Product</ListGroup.Item>
     </ListGroup>
   )
 }

@@ -37,7 +37,44 @@ const categoryView = async (req, res) => {
   }
 };
 
+const categoryEdit = async (req, res) => {
+  try {
+    const id = req.query.id
+    const editCategory = await Category.findByIdAndUpdate(id,{
+      categoryName : req.body.categoryName
+    })
+    return res.status(201).json({
+      success: true,
+      message: "Category updated successfully",
+      editCategory
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error" + err,
+    });
+  }
+};
+
+const categoryDelete = async (req, res) => {
+  try {
+    const id = req.query.id
+    const deleteCategory = await Category.findByIdAndDelete(id)
+    return res.status(201).json({
+      success: true,
+      message: "Category deleted successfully",
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error" + err,
+    });
+  }
+};
+
 module.exports = {
   categoryAdd,
-  categoryView
+  categoryView,
+  categoryDelete,
+  categoryEdit,
 };

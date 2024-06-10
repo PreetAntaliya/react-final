@@ -62,3 +62,7 @@ ul {
   background-color: var(--primary) !important;
   border-color: var(--primary) !important;
 }
+
+li {
+  border-bottom: 1px solid var(--primary);
+}
